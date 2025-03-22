@@ -1,0 +1,6 @@
+@Mission11_Redden.API_HostAddress = http://localhost:5036
+
+GET {{Mission11_Redden.API_HostAddress}}/bookstore/
+Accept: application/json
+
+###
