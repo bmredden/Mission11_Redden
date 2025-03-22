@@ -20,7 +20,7 @@ function BookTable() {
 
   const fetchBooks = () => {
     fetch(
-      `https://localhost:5001/api/books?page=${page}&pageSize=${pageSize}&sortBy=Title`
+      `https://localhost:5001/api/books?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}`
     )
       .then((response) => response.json())
       .then((data) => setBooks(data))
