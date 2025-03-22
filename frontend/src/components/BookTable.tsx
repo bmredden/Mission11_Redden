@@ -15,7 +15,8 @@ interface Books {
 function BookTable() {
   const [books, setBooks] = useState<Books[]>([]);
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(5);
+  const [sortBy, setSortBy] = useState("Title");
 
   const fetchBooks = () => {
     fetch(
@@ -28,10 +29,42 @@ function BookTable() {
 
   useEffect(() => {
     fetchBooks();
-  }, [page]);
+  }, [page, pageSize, sortBy]);
 
   return (
     <>
+      <div style={{ marginBottom: "1rem" }}>
+        <label htmlFor="pageSize">Books per page: </label>
+        <select
+          id="pageSize"
+          value={pageSize}
+          onChange={(e) => {
+            setPage(1); // reset to first page when size changes
+            setPageSize(Number(e.target.value));
+          }}
+        >
+          <option value={5}>5</option>
+          <option value={10}>10</option>
+          <option value={15}>15</option>
+        </select>
+
+        <span style={{ marginLeft: "2rem" }}>
+          <label htmlFor="sortBy">Sort by: </label>
+          <select
+            id="sortBy"
+            value={sortBy}
+            onChange={(e) => {
+              setPage(1); // reset to first page when sorting changes
+              setSortBy(e.target.value);
+            }}
+          >
+            <option value="Title">Title</option>
+            <option value="Author">Author</option>
+            <option value="Price">Price</option>
+          </select>
+        </span>
+      </div>
+
       <table border={1} width="100%" cellPadding={20}>
         <thead>
           <tr>
