@@ -16,33 +16,58 @@ namespace Mission11_Redden.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Books>>> GetBooks(int page = 1, int pageSize = 5, string sortBy = "Title")
+        public async Task<ActionResult> GetBooks(
+            int page = 1,
+            int pageSize = 5,
+            string sortBy = "Title",
+            [FromQuery] List<string>? category = null)
         {
             var query = _context.Books.AsQueryable();
 
+            if (category != null && category.Any())
+            {
+                query = query.Where(b => category.Contains(b.Category));
+            }
+
+            var totalCount = await query.CountAsync();
+
+            List<Books> books;
+
             if (sortBy == "Price")
             {
-                // Fetch all books into memory for in-memory sorting
-                var allBooks = await query.ToListAsync();
-
-                // Sort and paginate manually
-                var sorted = allBooks
+                books = query
+                    .ToList() 
                     .OrderBy(b => b.Price)
                     .Skip((page - 1) * pageSize)
                     .Take(pageSize)
                     .ToList();
-
-                return Ok(sorted);
+            }
+            else
+            {
+                books = await query
+                    .OrderBy(b => EF.Property<object>(b, sortBy))
+                    .Skip((page - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
             }
 
-            // Server-side sorting and pagination for supported fields
-            var books = await query
-                .OrderBy(b => EF.Property<object>(b, sortBy))
-                .Skip((page - 1) * pageSize)
-                .Take(pageSize)
+            return Ok(new
+            {
+                books,
+                totalCount
+            });
+        }
+        
+        [HttpGet("categories")]
+        public async Task<ActionResult<IEnumerable<string>>> GetCategories()
+        {
+            var categories = await _context.Books
+                .Select(b => b.Category)
+                .Distinct()
+                .OrderBy(c => c)
                 .ToListAsync();
 
-            return Ok(books);
+            return Ok(categories);
         }
     }
 }
