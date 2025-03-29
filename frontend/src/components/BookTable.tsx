@@ -15,7 +15,11 @@ interface Book {
   price: number;
 }
 
-function BookTable() {
+interface BookTableProps {
+  showToast: () => void;
+}
+
+function BookTable({ showToast }: BookTableProps) {
   const [books, setBooks] = useState<Book[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -104,14 +108,15 @@ function BookTable() {
                 <td>
                   <button
                     className="btn btn-sm btn-success"
-                    onClick={() =>
+                    onClick={() => {
                       addToCart({
                         bookID: b.bookID,
                         title: b.title,
                         price: b.price,
                         quantity: 1,
-                      })
-                    }
+                      });
+                      showToast();
+                    }}
                   >
                     Add to Cart
                   </button>
