@@ -49,8 +49,8 @@ const BookForm = ({
 
     const method = book.bookID ? "PUT" : "POST";
     const url = book.bookID
-      ? `https://localhost:5001/api/books/${book.bookID}`
-      : "https://localhost:5001/api/books";
+      ? `https://is413-mission13-backend-hfhygrhuhxeqbggp.westus2-01.azurewebsites.net/api/books/${book.bookID}`
+      : "https://is413-mission13-backend-hfhygrhuhxeqbggp.westus2-01.azurewebsites.net/api/books";
 
     await fetch(url, {
       method,

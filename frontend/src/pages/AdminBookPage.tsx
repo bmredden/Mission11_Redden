@@ -14,7 +14,7 @@ const AdminBookPage = () => {
 
   const fetchBooks = async () => {
     const res = await fetch(
-      `https://localhost:5001/api/books?page=${page}&pageSize=${pageSize}`
+      `https://is413-mission13-backend-hfhygrhuhxeqbggp.westus2-01.azurewebsites.net/api/books?page=${page}&pageSize=${pageSize}`
     );
     const data = await res.json();
     setBooks(data.books);

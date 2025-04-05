@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "undefined/subscriptions/35eabfd7-914f-4ed7-90ec-dc62d1344e0d/resourceGroups/appsvc_windows_westus2/providers/Microsoft.Web/sites/IS413-Mission13-Backend",
+  "appService.deploySubpath": "backend/Mission11_Redden.API/Mission11_Redden.API/publish"
+}

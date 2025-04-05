@@ -33,7 +33,7 @@ function BookTable({ showToast }: BookTableProps) {
   const totalPages = Math.ceil(totalCount / pageSize);
 
   const fetchCategories = async () => {
-    const res = await fetch("https://localhost:5001/api/books/categories");
+    const res = await fetch("https://is413-mission13-backend-hfhygrhuhxeqbggp.westus2-01.azurewebsites.net/api/books/categories");
     const data = await res.json();
     setCategories(data);
   };
@@ -43,7 +43,7 @@ function BookTable({ showToast }: BookTableProps) {
       .map((c) => `category=${encodeURIComponent(c)}`)
       .join("&");
 
-    const url = `https://localhost:5001/api/books?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&${categoryQuery}`;
+    const url = `https://is413-mission13-backend-hfhygrhuhxeqbggp.westus2-01.azurewebsites.net/api/books?page=${page}&pageSize=${pageSize}&sortBy=${sortBy}&${categoryQuery}`;
     const res = await fetch(url);
     const data = await res.json();
     setBooks(data.books);

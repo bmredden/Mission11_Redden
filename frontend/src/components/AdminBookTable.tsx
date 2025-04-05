@@ -9,7 +9,7 @@ interface AdminBookTableProps {
 const AdminBookTable = ({ books, onEdit, onDeleted }: AdminBookTableProps) => {
   const handleDelete = async (id: number) => {
     if (window.confirm("Are you sure you want to delete this book?")) {
-      await fetch(`https://localhost:5001/api/books/${id}`, {
+      await fetch(`https://is413-mission13-backend-hfhygrhuhxeqbggp.westus2-01.azurewebsites.net/api/books/${id}`, {
         method: "DELETE",
       });
       onDeleted(); // refresh
